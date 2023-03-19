@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# kubernetes
+kubectl
+kubectl.sha256
+
 # C extensions
 *.so
 
