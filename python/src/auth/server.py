@@ -6,8 +6,8 @@ server = Flask(__name__)
 
 environment = {
     "MYSQL_HOST": "localhost",
-    "MYSQL_USER": "root",
-    "MYSQL_PASSWORD": "AlieN3242DucE_",
+    "MYSQL_USER": "fcc",
+    "MYSQL_PASSWORD": "Admin_fcc123",
     "MYSQL_DB": "fcc_micros",
     "MYSQL_PORT": 3306,
     "JWT_SECRET": "my_jwt_secret"

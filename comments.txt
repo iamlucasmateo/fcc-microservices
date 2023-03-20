@@ -1,1 +1,1 @@
-1:03 -> Dockerfile in hub
+1:19 -> K8s cluster
