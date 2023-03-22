@@ -61,6 +61,10 @@ def validate():
     return decoded, 200
 
 
+@server.route("/status", methods=["GET"])
+def status():
+    return "OK", 200
+
 
 def createJWT(username: str, secret: str, isAdmin: bool):
     now = datetime.datetime.now(tz=datetime.timezone.utc)
