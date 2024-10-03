@@ -4,6 +4,7 @@ metadata:
   name: auth
   labels:
     app: auth
+  namespace: fcc-microservices-auth
 
 spec:
   replicas: 2
@@ -22,6 +23,7 @@ spec:
       containers:
         - name: auth
           image: lucchini/fcc-microservices-auth
+          # imagePullPolicy: Always
           ports:
             - containerPort: 5000
           envFrom:

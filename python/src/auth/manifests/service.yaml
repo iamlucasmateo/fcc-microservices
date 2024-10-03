@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: auth
+  namespace: fcc-microservices-auth
 spec:
   selector:
     app: auth

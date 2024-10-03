@@ -9,7 +9,7 @@ from storage import util
 
 
 server = Flask(__name__)
-server.config["MONGO_URI"] = "monogodb://host.minikube.internal:27017/videos"
+server.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
 # mongo interface from the flask app
 mongo = PyMongo(server)
@@ -18,9 +18,10 @@ mongo = PyMongo(server)
 fs = gridfs.GridFS(mongo.db)
 
 # rabbitmq references RabbitMQ host
-pika_params = pika.ConnectionParameters("rabbitmq")
-connection = pika.BlockingConnection(pika_params)
-channel = connection.channel()
+# pika_params = pika.ConnectionParameters("rabbitmq")
+# connection = pika.BlockingConnection(pika_params)
+# channel = connection.channel()
+channel = ""
 
 @server.route("/login", methods=["POST"])
 def login():
@@ -28,6 +29,11 @@ def login():
     if error is None:
         return token
     return error
+
+
+@server.route("/status", methods=["GET"])
+def status():
+    return "OK", 200
 
 
 @server.route("/upload", methods=["POST"])
@@ -48,6 +54,9 @@ def upload():
                 return file_error
         
         return "success", 200
+
+    else:
+        return "not authorized", 403
 
 
 @server.route("/download", methods=["GET"])

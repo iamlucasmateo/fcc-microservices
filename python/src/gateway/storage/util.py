@@ -1,4 +1,5 @@
 import json
+import os
 
 import pika
 
@@ -19,7 +20,7 @@ def upload(file_data, fs, channel, access):
     try:
         channel.basic_publish(
             exchange="", # this uses the default exchange
-            routing_key="video", # the default exchange will pass this to the correct queue
+            routing_key=os.environ.get("VIDEO_ROUTING_KEY"), # the default exchange will pass this to the correct queue
             body=json.dumps(message),
             properties=pika.BasicProperties(
                 # if the node fails or crashes, the queue and the messages are persisted

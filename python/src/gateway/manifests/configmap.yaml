@@ -4,3 +4,5 @@ metadata:
   name: gateway-config
 data:
   AUTH_SERVICE_ADDRESS: "auth:5000"
+  VIDEO_ROUTING_KEY: "video"
+  MONGO_URI: "mongodb://host.minikube.internal:27017/videos"

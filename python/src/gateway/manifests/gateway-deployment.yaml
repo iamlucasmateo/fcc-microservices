@@ -21,8 +21,9 @@ spec:
       containers:
         - name: gateway
           image: lucchini/fcc-microservices-gateway
+          # imagePullPolicy: Always
           envFrom: 
             - configMapRef:
-                name: gateway
+                name: gateway-config
             - secretRef:
                 name: gateway-secret
