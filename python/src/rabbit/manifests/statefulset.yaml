@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: rabbitmq
 spec:
-  service-name: "not-applicable"
+  serviceName: "not-applicable"
   selector:
     matchLabels:
       app: rabbitmq
@@ -32,5 +32,6 @@ spec:
               name: rabbitmq-volume
       volumes:
         - name: rabbitmq-volume
-          persistenceVolumeClaim:
+        # link this StatefulSet to the PVC
+          persistentVolumeClaim:
             claimName: rabbitmq-pvc

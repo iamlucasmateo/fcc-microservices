@@ -4,7 +4,6 @@ metadata:
   name: auth
   labels:
     app: auth
-  namespace: fcc-microservices-auth
 
 spec:
   replicas: 2

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: converter-configmap
+data:
+  RABBITMQ_MP3_QUEUE: "mp3"
+  RABBITMQ_VIDEO_QUEUE: "video"
+  RABBITMQ_HOST: "rabbitmq"
+  MONGO_HOST: "host.minikube.internal"
+  MONGO_PORT: "27017"

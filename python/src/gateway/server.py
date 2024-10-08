@@ -18,10 +18,10 @@ mongo = PyMongo(server)
 fs = gridfs.GridFS(mongo.db)
 
 # rabbitmq references RabbitMQ host
-# pika_params = pika.ConnectionParameters("rabbitmq")
-# connection = pika.BlockingConnection(pika_params)
-# channel = connection.channel()
-channel = ""
+rabbitmq_host = os.environ.get("RABBITMQ_HOST")
+pika_params = pika.ConnectionParameters(host=rabbitmq_host)
+connection = pika.BlockingConnection(pika_params)
+channel = connection.channel()
 
 @server.route("/login", methods=["POST"])
 def login():

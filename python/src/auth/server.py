@@ -1,16 +1,20 @@
 import jwt, datetime, os
+
+from dotenv import load_dotenv 
 from flask import Flask, request
 from flask_mysqldb import MySQL
+
+load_dotenv()
 
 server = Flask(__name__)
 
 environment = {
-    "MYSQL_HOST": "localhost",
-    "MYSQL_USER": "fcc",
-    "MYSQL_PASSWORD": "Admin_fcc123",
-    "MYSQL_DB": "fcc_micros",
-    "MYSQL_PORT": 3306,
-    "JWT_SECRET": "my_jwt_secret"
+    "MYSQL_HOST": os.environ.get("MYSQL_HOST"),
+    "MYSQL_USER": os.environ.get("MYSQL_USER"),
+    "MYSQL_PASSWORD": os.environ.get("MYSQL_PASSWORD"),
+    "MYSQL_DB": os.environ.get("MYSQL_DB"),
+    "MYSQL_PORT": int(os.environ.get("MYSQL_PORT")),
+    "JWT_SECRET": "my_jwt_secret",
 }
 
 # config
@@ -29,7 +33,7 @@ def login():
     # check DB for user and pass
     cur = mysql.connection.cursor()
     values = (auth.username,)
-    query = "SELECT email, password, isAdmin FROM user WHERE email=%s"
+    query = f"SELECT email, password, isAdmin FROM {os.environ.get('USERS_TABLE')} WHERE email=%s"
     res = cur.execute(query, values)
     if res > 0:
         user_row = cur.fetchone()
@@ -89,4 +93,6 @@ if __name__ == "__main__":
     # and the same container can have different addresses in different networks that it is part of.
     # so, by listening on all IP adresses of the Docker container, the app will always get the requests directed at it.
     all_ips = "0.0.0.0"
-    server.run(host=all_ips, port=5000)
+    port = os.environ.get("FLASK_PORT") or "5000"
+    port = int(port)
+    server.run(host=all_ips, port=port)
