@@ -13,6 +13,6 @@ def token(request):
     
     response = requests.post(AUTH_SERVICE_URL, headers={"Authorization": token})
 
-    if response.status == 200:
+    if response.status_code == 200:
         return response.text, None
     return None, ("Invalid token", 401)

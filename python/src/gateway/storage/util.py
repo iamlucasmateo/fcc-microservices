@@ -3,12 +3,17 @@ import os
 
 import pika
 
+from app_logger import get_logger
+
+logger = get_logger(__name__)
+
 
 def upload(file_data, fs, channel, access):
     """Uploads video and posts a message in the channel."""
     try:
         file_id = fs.put(file_data)
     except Exception as error:
+        logger.debug(f"Error uploading file: {error}")
         return "Internal server error uploading file", 500
     
     message = {
