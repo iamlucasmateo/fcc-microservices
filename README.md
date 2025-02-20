@@ -29,6 +29,7 @@ Username and password for the RabbitMQ Manager console is `guest`
 To connect to the MySQL Docker container running on Kubernetes from your local for debugging:
 - `kubectl port-forward svc/mysql 3307:3306` (using the 3307 local port to avoid clashing with a local MySQL server)
 
+
 ## Connect to the MongoDB container
 
 - To port forward the container: `kubectl port-forward svc/mongodb 27018:27017`
@@ -42,13 +43,21 @@ db.createUser(
     user: "fcc_micro_user",
     pwd: "fcc_micro_password",
     roles: [
-      { role: "readWrite", db: "videos" }
+      { role: "readWrite", db: "video" },
+      { role: "readWrite", db: "mp3s" }
     ]
   }
 )
 ```
 
+
 ## Some cURL commands
 
 - Login: `curl -X POST http://mp3converter.com/login -u <user>:<password>`
-- POST a new video: `curl -X POST 'file=@./<full-path-to-file>' -H Authorization: Bearer <token> http://mp3converter.com/upload`
+- POST a new video: `curl -X POST -F 'file=@./<full-path-to-file>' -H "Authorization: Bearer <token>" http://mp3converter.com/upload`
+
+
+## Updating Docker images
+
+- E.g. build: `docker build -t lucchini/fcc-microservices-gateway:latest .`
+- E.g. push: `docker push lucchini/fcc-microservices-gateway:latest`

@@ -8,17 +8,17 @@ def start(message_json, fs_videos, fs_mp3s, channel):
   # empty temp file
   tf = tempfile.NamedTemporaryFile()
   # video contents
-  out = fs_videos.get(ObjectId(message["video_fid"])).read()
+  out = fs_videos.get(ObjectId(message["video_file_id"]))
   # add video contents to empty file
   tf.write(out.read())
-  # create audio form temp video file
+  # create audio from temp video file
   # tf.name will have the path to the temp file
   audio = moviepy.editor.VideoFileClip(tf.name).audio
   # this will delete the temp file
   tf.close()
 
   # write audio to temp file
-  tf_path = tempfile.gettempdir() + f"/{message['video_fid']}.mp3"
+  tf_path = tempfile.gettempdir() + f"/{message['video_file_id']}.mp3"
   audio.write_audiofile(tf_path)
 
   # save file to Mongo
@@ -28,7 +28,7 @@ def start(message_json, fs_videos, fs_mp3s, channel):
   f.close()
   os.remove(tf_path)
 
-  message["mp3_fid"] = str(fid)
+  message["mp3_file_id"] = str(fid)
 
   try:
     channel.basic_publish(

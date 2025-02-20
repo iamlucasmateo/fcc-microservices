@@ -6,5 +6,6 @@ data:
   RABBITMQ_MP3_QUEUE: "mp3"
   RABBITMQ_VIDEO_QUEUE: "video"
   RABBITMQ_HOST: "rabbitmq"
+  MONGO_URI: "mongodb://fcc_micro_user:fcc_micro_password@mongodb:27017"
   MONGO_HOST: "host.minikube.internal"
   MONGO_PORT: "27017"

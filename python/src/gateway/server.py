@@ -57,7 +57,7 @@ def upload():
             return "Exactly 1 file required", 400
         
         for filename, file_data in request.files.items():
-            file_error = util.upload(file_data, fs, channel, access)
+            file_error = util.upload(file_data, fs, channel, access, filename)
             if file_error:
                 return file_error
         
@@ -83,7 +83,7 @@ def check_db_auth():
 
         return jsonify(is_master=server_status, is_authorized=True, collections=collection_names), 200
     except pymongo_errors.OperationFailure as exc:
-        logger.debug(f"Unauthorized access to the database: {repr(exc)}")
+        logger.debug(f"Unauthorized access to the MongoDB: {repr(exc)}")
         # If listing the collections fails, the credentials are not authorized
         return jsonify(is_master=False, is_authorized=False), 403
 

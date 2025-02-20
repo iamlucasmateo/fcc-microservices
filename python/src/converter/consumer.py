@@ -4,15 +4,15 @@ import gridfs
 import to_mp3
 
 
-MONGO_HOST = os.environ.get("MONGO_HOST")
+MONGO_URI = os.environ.get("MONGO_URI")
 MONGO_PORT = int(os.environ.get("MONGO_PORT"))
 RABBITMQ_HOST = os.environ.get("RABBITMQ_HOST")
 RABBITMQ_VIDEO_QUEUE = os.environ.get("RABBITMQ_VIDEO_QUEUE")
 
 
 def main():
-  client = MongoClient(MONGO_HOST, MONGO_PORT)
-  db_videos = client.videos
+  client = MongoClient(MONGO_URI)
+  db_videos = client.video
   db_mp3s = client.mp3s
   fs_videos = gridfs.GridFS(db_videos)
   fs_mp3s = gridfs.GridFS(db_mp3s)

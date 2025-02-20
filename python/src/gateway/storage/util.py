@@ -8,12 +8,12 @@ from app_logger import get_logger
 logger = get_logger(__name__)
 
 
-def upload(file_data, fs, channel, access):
+def upload(file_data, fs, channel, access, filename):
     """Uploads video and posts a message in the channel."""
     try:
         file_id = fs.put(file_data)
     except Exception as error:
-        logger.debug(f"Error uploading file: {error}")
+        logger.debug(f"Error uploading file {filename}: {error}")
         return "Internal server error uploading file", 500
     
     message = {
