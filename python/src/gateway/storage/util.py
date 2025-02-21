@@ -32,7 +32,8 @@ def upload(file_data, fs, channel, access, filename):
                 delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE,
             )
         )
-    except:
+    except Exception as exc:
+        logger.debug(f"Error posting message to queue: {exc}")
         fs.delete(file_id)
         return "Internal server error posting message to queue", 500
 

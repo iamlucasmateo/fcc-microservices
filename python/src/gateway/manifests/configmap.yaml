@@ -7,6 +7,7 @@ data:
   VIDEO_ROUTING_KEY: "video"
   MONGO_URI: "mongodb://fcc_micro_user:fcc_micro_password@mongodb:27017"
   MONGO_VIDEOS_DB: "video"
+  MONGO_MP3S_DB: "mp3s"
   RABBITMQ_HOST: "rabbitmq"
   SERVER_HOST: "0.0.0.0"
   SERVER_PORT: "8080"

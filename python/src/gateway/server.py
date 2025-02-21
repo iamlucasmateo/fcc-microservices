@@ -1,9 +1,10 @@
 import os, gridfs, pika, json
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 from pymongo import errors as pymongo_errors
+from bson.objectid import ObjectId
 
 from auth import validate
 from auth_svc import access
@@ -19,10 +20,14 @@ server.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 server.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 * 10 # 160 MB
 
 # mongo interface from the flask app
-mongo = PyMongo(server)
-mongo.db = mongo.cx[os.environ.get("MONGO_VIDEOS_DB")]
+mongo_video = PyMongo(server)
+mongo_video.db = mongo_video.cx[os.environ.get("MONGO_VIDEOS_DB")]
 # handles size limit in MongoDB (max 16MB)
-fs = gridfs.GridFS(mongo.db)
+fs_video = gridfs.GridFS(mongo_video.db)
+
+
+mongo_mp3s = PyMongo(server)
+mongo_mp3s.db = mongo_mp3s.cx[os.environ.get("MONGO_MP3S_DB")]
 
 # rabbitmq references RabbitMQ host
 rabbitmq_host = os.environ.get("RABBITMQ_HOST")
@@ -57,7 +62,7 @@ def upload():
             return "Exactly 1 file required", 400
         
         for filename, file_data in request.files.items():
-            file_error = util.upload(file_data, fs, channel, access, filename)
+            file_error = util.upload(file_data, fs_video, channel, access, filename)
             if file_error:
                 return file_error
         
@@ -76,10 +81,10 @@ def download():
 def check_db_auth():
     try:
         # Use the 'admin' database for the ismaster command
-        server_status = mongo.db.command("ismaster")
+        server_status = mongo_video.db.command("ismaster")
 
         # Try to list all collection names in the current database
-        collection_names = mongo.db.list_collection_names()
+        collection_names = mongo_video.db.list_collection_names()
 
         return jsonify(is_master=server_status, is_authorized=True, collections=collection_names), 200
     except pymongo_errors.OperationFailure as exc:

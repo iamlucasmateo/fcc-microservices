@@ -49,6 +49,7 @@ db.createUser(
   }
 )
 ```
+- Download MP3 file locally: `mongofiles --uri "mongodb://username:password@127.0.0.1:27018/mp3s?authSource=admin" --db=mp3s get_id --local=video_down_mp3_test1.mp3 '{"$oid": "67b8664245349ed52fb9485d"}'` (you can use one id from the Rabbit MQ manager panel).
 
 
 ## Some cURL commands

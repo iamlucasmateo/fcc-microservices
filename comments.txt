@@ -1,3 +1,1 @@
-2:58 -> RabbitMQ Kubernetes configuration
-
-minikube tunnel
+4h:23 -> MP3 Download
